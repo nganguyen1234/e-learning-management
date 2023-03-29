@@ -2,13 +2,9 @@ import Button from "react-bootstrap/Button";
 import Form from "react-bootstrap/Form";
 import React from "react";
 import { Field, useFormik } from "formik";
-import ButtonGroup from "react-bootstrap/ButtonGroup";
-import ToggleButton from "react-bootstrap/ToggleButton";
-import { useState } from "react";
-import { FormCheck, ToggleButtonGroup } from "react-bootstrap";
 import { Formik } from "formik";
+import axios from "axios";
 function BasicExample() {
-  const [checked, setChecked] = useState(false);
   const formik = useFormik({
     initialValues: {
       fullName: "abc",
@@ -18,69 +14,67 @@ function BasicExample() {
       ethnicGroup: "",
       religion: "",
     },
+    onSubmit :(values) => {
+      axios.post("http://localhost:8080/student/add-student-to-class",values)
+      .then((response) => {console.log(response)});
+    },
   });
 
+  const handleGenderChoosing = (e) => {
+    formik.values.gender = e.target.value;
+  }
+
   return (
-    <Formik>
-      <Form>
-        <Form.Group className="mb-3" controlId="formBasicEmail">
-          <Form.Label>Full name</Form.Label>
-          <Form.Control
+      <form className="form" onSubmit={formik.handleSubmit}>
+        <div className="mb-3 form-group" >
+          <label htmlFor="fullName">Full name</label>
+          <input
             type="text"
+            name="fullName"
             placeholder="Enter student name"
             value={formik.values.fullName}
-            // name="fullName"
             onChange={formik.handleChange}
           />
-        </Form.Group>
-        <Form.Group className="mb-3" controlId="formBasicPassword">
-          <Form.Label>Date of birth</Form.Label>
-          <Form.Control
+        </div>
+        <div className="mb-3 form-group">
+          <label htmlFor="dateOfBirth">Date of birth</label>
+          <input
             type="date"
+            name="dateOfBirth"
             placeholder="dd/MM/yyyy"
             value={formik.values.dateOfBirth}
-            // name="dateOfBirth"
             onChange={formik.handleChange}
           />
-        </Form.Group>
-        {/* <Form.Group className="mb-3">
-      <Form.Label>Gender</Form.Label>
-    <Form.Select value={formik.values.gender} onChange={formik.handleChange}>
-      <option key="" value="">Select gender</option>
-      <option key="male" value="Male">Male</option>
-      <option key="female" value="Female">Female</option>
-    </Form.Select>
-    </Form.Group> */}
+        </div>
         <div className="form-group">
           <div className="form-check">
-             <Field
+             <input
             className="form-check-input"
             type="radio"
-            name="gender"
             value="male"
             id="male"
-          ></Field>
+            name="gender"
+            onChange={handleGenderChoosing}
+          ></input>
           <label className="form-check-label" htmlFor="male">Male</label>
           </div>
-         
           <div className="form-check">
-             <Field
+             <input
             className="form-check-input"
             type="radio"
             name="gender"
             value="female"
             id="female"
-          ></Field>
+            onChange={handleGenderChoosing}
+          ></input>
           <label className="form-check-label" htmlFor="female">Female</label>
           </div>
-         
-
         </div>
-        <Button variant="primary" type="submit">
+        <button className="button" variant="primary" type="submit">
           Submit
-        </Button>
-      </Form>
-    </Formik>
+        </button>
+      </form>
+
   );
 }
 

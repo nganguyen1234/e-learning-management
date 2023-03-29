@@ -11,7 +11,7 @@ function App() {
     <Router>
       <Routes>
 <Route exact path="/add-class" element = {<AddClass/>}></Route>
-<Route exact path="/add-student" element={<AddStudentDemo/>}></Route>
+<Route exact path="/add-student" element={<AddStudent/>}></Route>
       </Routes>
     </Router>
     </div>
