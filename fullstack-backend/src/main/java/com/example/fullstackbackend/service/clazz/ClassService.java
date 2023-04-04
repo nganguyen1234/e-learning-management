@@ -15,4 +15,8 @@ public class ClassService {
     public List<Clazz> get1stGrade() {
         return classRepository.find1stGrade();
     }
+
+    public Clazz addClass(Clazz clazz){
+        return classRepository.save(clazz);
+    }
 }

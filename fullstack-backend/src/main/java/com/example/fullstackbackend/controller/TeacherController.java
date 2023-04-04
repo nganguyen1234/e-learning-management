@@ -1,5 +1,6 @@
 package com.example.fullstackbackend.controller;
 
+import com.example.fullstackbackend.model.teacher.Faculty;
 import com.example.fullstackbackend.model.teacher.Teacher;
 import com.example.fullstackbackend.model.teacher.TeacherDto;
 import com.example.fullstackbackend.service.teacher.TeacherService;
@@ -29,6 +30,15 @@ public class TeacherController {
         return teacherService.addTeacher(teacher);
     }
 
+//    @PostMapping("/search-teacher")
+//    List<Teacher> searchTeacher(@RequestBody String fullName, @RequestBody Faculty faculty){
+//        return teacherService.searchTeacher(fullName,faculty);
+//    }
+
+    @GetMapping("/search-teacher")
+    List<Teacher> searchTeacher(@RequestParam(value = "teacherName",defaultValue = "") String fullName, @RequestParam("facultyId") Integer facultyId) {
+        return teacherService.searchTeacher(fullName, facultyId);
+    }
 //    @PostMapping("/edit-teacher")
 //    Teacher editTeacher(@RequestBody TeacherDto teacherDto, @RequestBody Integer id){
 //

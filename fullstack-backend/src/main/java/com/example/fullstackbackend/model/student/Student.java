@@ -1,5 +1,6 @@
 package com.example.fullstackbackend.model.student;
 
+import com.example.fullstackbackend.model.address.City;
 import com.example.fullstackbackend.model.clazz.Clazz;
 
 import javax.persistence.*;
@@ -13,14 +14,18 @@ public class Student {
     private String photo;
     private String dateOfBirth;
     private boolean gender;
-    private String placeOfOrigin;
+//    private String placeOfOrigin;
+    @ManyToOne
+    private City placeOfOrigin;
     private String ethnicGroup;
     private String religion;
     private String dadName;
     private String dadJob;
     private String momName;
     private String momJob;
+    @Column(columnDefinition = "boolean default true")
     private boolean status;
+    @Column(columnDefinition = "boolean default false")
     private boolean isDeleted;
     @ManyToOne
     private Clazz clazz;
@@ -65,11 +70,19 @@ public class Student {
         this.gender = gender;
     }
 
-    public String getPlaceOfOrigin() {
+//    public String getPlaceOfOrigin() {
+//        return placeOfOrigin;
+//    }
+//
+//    public void setPlaceOfOrigin(String placeOfOrigin) {
+//        this.placeOfOrigin = placeOfOrigin;
+//    }
+
+    public City getPlaceOfOrigin() {
         return placeOfOrigin;
     }
 
-    public void setPlaceOfOrigin(String placeOfOrigin) {
+    public void setPlaceOfOrigin(City placeOfOrigin) {
         this.placeOfOrigin = placeOfOrigin;
     }
 

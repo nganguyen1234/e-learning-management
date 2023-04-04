@@ -1,0 +1,135 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<diagram program="umlet" version="14.3.0">
+  <zoom_level>10</zoom_level>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>300</x>
+      <y>500</y>
+      <w>130</w>
+      <h>120</h>
+    </coordinates>
+    <panel_attributes>Student
+--
+
+bg=#dddddd
+</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>860</x>
+      <y>290</y>
+      <w>130</w>
+      <h>120</h>
+    </coordinates>
+    <panel_attributes>Grade
+--
+
+bg=#dddddd
+</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>300</x>
+      <y>210</y>
+      <w>130</w>
+      <h>230</h>
+    </coordinates>
+    <panel_attributes>Teacher
+--
+id
+fullname
+dOB
+idCardNumber
+address
+phoneNumber
+emailAddress
+placeOfOrigin
+gender
+faculty
+
+
+bg=#dddddd
+</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>570</x>
+      <y>480</y>
+      <w>130</w>
+      <h>120</h>
+    </coordinates>
+    <panel_attributes>User
+--
+
+bg=#dddddd
+</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>540</x>
+      <y>680</y>
+      <w>130</w>
+      <h>120</h>
+    </coordinates>
+    <panel_attributes>
+--
+
+bg=#dddddd
+</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>580</x>
+      <y>240</y>
+      <w>130</w>
+      <h>120</h>
+    </coordinates>
+    <panel_attributes>Role
+--
+
+bg=#dddddd
+</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>1120</x>
+      <y>480</y>
+      <w>130</w>
+      <h>120</h>
+    </coordinates>
+    <panel_attributes>
+--
+
+bg=#dddddd
+</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>950</x>
+      <y>690</y>
+      <w>130</w>
+      <h>120</h>
+    </coordinates>
+    <panel_attributes>
+--
+
+bg=#dddddd
+</panel_attributes>
+    <additional_attributes/>
+  </element>
+</diagram>

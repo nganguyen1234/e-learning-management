@@ -1,5 +1,7 @@
 package com.example.fullstackbackend.model.teacher;
 
+import com.example.fullstackbackend.model.address.City;
+import com.example.fullstackbackend.model.address.Ethnicity;
 import com.example.fullstackbackend.model.clazz.Clazz;
 import org.springframework.boot.context.properties.bind.DefaultValue;
 
@@ -13,14 +15,19 @@ public class Teacher {
     private Integer id;
     private String fullName;
     private String dateOfBirth;
+    private String idCardNumber;
     private String address;
     private String phoneNumber;
-    private String placeOfOrigin;
+    private String emailAddress;
+    @ManyToOne
+    private Ethnicity ethnicity;
+    @ManyToOne
+    private City placeOfOrigin;
     private boolean gender;
     @Column(columnDefinition = "boolean default false")
     private boolean isDeleted;
-    @ManyToMany()
-    private Set<Clazz> clazzSet;
+    @ManyToOne
+    private Faculty faculty;
 
     public Integer getId() {
         return id;
@@ -44,6 +51,14 @@ public class Teacher {
 
     public void setDateOfBirth(String dateOfBirth) {
         this.dateOfBirth = dateOfBirth;
+    }
+
+    public String getIdCardNumber() {
+        return idCardNumber;
+    }
+
+    public void setIdCardNumber(String idCardNumber) {
+        this.idCardNumber = idCardNumber;
     }
 
     public String getAddress() {
@@ -70,6 +85,22 @@ public class Teacher {
         this.gender = gender;
     }
 
+    public String getEmailAddress() {
+        return emailAddress;
+    }
+
+    public void setEmailAddress(String emailAddress) {
+        this.emailAddress = emailAddress;
+    }
+
+    public City getPlaceOfOrigin() {
+        return placeOfOrigin;
+    }
+
+    public void setPlaceOfOrigin(City placeOfOrigin) {
+        this.placeOfOrigin = placeOfOrigin;
+    }
+
     public boolean isDeleted() {
         return isDeleted;
     }
@@ -78,19 +109,19 @@ public class Teacher {
         isDeleted = deleted;
     }
 
-    public String getPlaceOfOrigin() {
-        return placeOfOrigin;
+    public Faculty getFaculty() {
+        return faculty;
     }
 
-    public void setPlaceOfOrigin(String placeOfOrigin) {
-        this.placeOfOrigin = placeOfOrigin;
+    public void setFaculty(Faculty faculty) {
+        this.faculty = faculty;
     }
 
-    public Set<Clazz> getClazzSet() {
-        return clazzSet;
+    public Ethnicity getEthnicity() {
+        return ethnicity;
     }
 
-    public void setClazzSet(Set<Clazz> clazzSet) {
-        this.clazzSet = clazzSet;
+    public void setEthnicity(Ethnicity ethnicity) {
+        this.ethnicity = ethnicity;
     }
 }

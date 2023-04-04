@@ -16,6 +16,8 @@ public class Clazz {
     private Set<Student> studentSet;
     @ManyToMany
     private Set<Teacher> teacherSet;
+    @OneToOne
+    private Teacher formTeacher;
     @Column(columnDefinition = "boolean default false")
     private boolean isDeleted;
     public Integer getId() {
@@ -52,6 +54,14 @@ public class Clazz {
 
     public boolean isDeleted() {
         return isDeleted;
+    }
+
+    public Teacher getFormTeacher() {
+        return formTeacher;
+    }
+
+    public void setFormTeacher(Teacher formTeacher) {
+        this.formTeacher = formTeacher;
     }
 
     public void setDeleted(boolean deleted) {
