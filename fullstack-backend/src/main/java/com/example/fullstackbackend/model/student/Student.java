@@ -1,6 +1,7 @@
 package com.example.fullstackbackend.model.student;
 
 import com.example.fullstackbackend.model.address.City;
+import com.example.fullstackbackend.model.address.Ethnicity;
 import com.example.fullstackbackend.model.clazz.Clazz;
 
 import javax.persistence.*;
@@ -11,14 +12,12 @@ public class Student {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
     private String fullName;
-    private String photo;
     private String dateOfBirth;
-    private boolean gender;
-//    private String placeOfOrigin;
+    private String gender;
     @ManyToOne
     private City placeOfOrigin;
-    private String ethnicGroup;
-    private String religion;
+    @ManyToOne
+    private Ethnicity ethnicity;
     private String dadName;
     private String dadJob;
     private String momName;
@@ -46,13 +45,6 @@ public class Student {
         this.fullName = fullName;
     }
 
-    public String getPhoto() {
-        return photo;
-    }
-
-    public void setPhoto(String photo) {
-        this.photo = photo;
-    }
 
     public String getDateOfBirth() {
         return dateOfBirth;
@@ -62,21 +54,13 @@ public class Student {
         this.dateOfBirth = dateOfBirth;
     }
 
-    public boolean isGender() {
+    public String getGender() {
         return gender;
     }
 
-    public void setGender(boolean gender) {
+    public void setGender(String gender) {
         this.gender = gender;
     }
-
-//    public String getPlaceOfOrigin() {
-//        return placeOfOrigin;
-//    }
-//
-//    public void setPlaceOfOrigin(String placeOfOrigin) {
-//        this.placeOfOrigin = placeOfOrigin;
-//    }
 
     public City getPlaceOfOrigin() {
         return placeOfOrigin;
@@ -86,20 +70,12 @@ public class Student {
         this.placeOfOrigin = placeOfOrigin;
     }
 
-    public String getEthnicGroup() {
-        return ethnicGroup;
+    public Ethnicity getEthnicity() {
+        return ethnicity;
     }
 
-    public void setEthnicGroup(String ethnicGroup) {
-        this.ethnicGroup = ethnicGroup;
-    }
-
-    public String getReligion() {
-        return religion;
-    }
-
-    public void setReligion(String religion) {
-        this.religion = religion;
+    public void setEthnicity(Ethnicity ethnicity) {
+        this.ethnicity = ethnicity;
     }
 
     public String getDadName() {

@@ -18,27 +18,23 @@ export default function Teacher() {
       teacherName: "",
       facultyId: 0,
     },
-    onSubmit: (() => {
+    onSubmit: () => {
       getTeacherList();
-    }),
-  //  onSubmit: values => {
-  //     getTeacherList();
-  //   },
-    
+    },
+    //  onSubmit: values => {
+    //     getTeacherList();
+    //   },
   });
 
- 
-     //lấy data(ds teacher) từ db, lưu trong state
+  //lấy data(ds teacher) từ db, lưu trong state
   const getTeacherList = async () => {
     await axios
-      .get("http://localhost:8080/teacher/search-teacher", 
-        {
-          params: {
-            fullName: formik.values.teacherName,
-            facultyId: formik.values.facultyId,
-          },
+      .get("http://localhost:8080/teacher/search-teacher", {
+        params: {
+          fullName: formik.values.teacherName,
+          facultyId: formik.values.facultyId,
         },
-      )
+      })
       .then((res) => {
         setTeacherList(res.data);
       });
@@ -59,7 +55,7 @@ export default function Teacher() {
     );
   });
 
-  //lấy data(ds faculty) từ db để làm dropdown giúp tìm kiếm teacher:
+  //lấy data(ds faculty) từ db để làm dropdown selection giúp tìm kiếm teacher:
   const getFacultyList = async () => {
     await axios
       .get("http://localhost:8080/personal-info/get-all-faculty")
@@ -68,16 +64,16 @@ export default function Teacher() {
       });
   };
 
-  // chuyển data ds faculty từ state sang dropdown
+  // chuyển data ds faculty từ state sang dropdown selection
   const renderFacultyList = facultyList.map((faculty) => {
     return <option value={faculty.id}>{faculty.name}</option>;
   });
 
   return (
     <div>
+      {/* search teacher form */}
       <div>
         <form className="d-flex" onSubmit={formik.handleSubmit}>
-          {/* <input className="form-control me-2" type="search" placeholder="Search" aria-label="Search"> */}
           <select
             className="form-select"
             name="facultyId"
@@ -103,6 +99,8 @@ export default function Teacher() {
           </button>
         </form>
       </div>
+
+      {/* teacher list */}
       <div>
         <table className="table">
           <thead>
@@ -122,5 +120,3 @@ export default function Teacher() {
     </div>
   );
 }
-
-

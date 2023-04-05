@@ -20,8 +20,13 @@ public class ClassController {
         return classService.get1stGrade();
     }
 
+    @GetMapping("/get-all-class")
+    List<Clazz> getAllClass() {
+        return classService.getAllClass();
+    }
+
     @PostMapping("/add-class")
-    Clazz addClass(@RequestBody Clazz clazz){
+    Clazz addClass(@RequestBody Clazz clazz) {
         return classService.addClass(clazz);
     }
 }

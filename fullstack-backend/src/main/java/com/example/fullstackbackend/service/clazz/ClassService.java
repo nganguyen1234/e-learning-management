@@ -19,4 +19,8 @@ public class ClassService {
     public Clazz addClass(Clazz clazz){
         return classRepository.save(clazz);
     }
+
+    public List<Clazz> getAllClass(){
+        return classRepository.findAll();
+    }
 }
