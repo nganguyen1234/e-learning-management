@@ -18,15 +18,20 @@ export default function Teacher() {
       teacherName: "",
       facultyId: 0,
     },
-    onsubmit: () => {
+    onSubmit: (() => {
       getTeacherList();
-    },
+    }),
+  //  onSubmit: values => {
+  //     getTeacherList();
+  //   },
+    
   });
 
-  //lấy data(ds teacher) từ db, lưu trong state
+ 
+     //lấy data(ds teacher) từ db, lưu trong state
   const getTeacherList = async () => {
     await axios
-      .get("http://localhost:8080/teacher/searchTeacher", 
+      .get("http://localhost:8080/teacher/search-teacher", 
         {
           params: {
             fullName: formik.values.teacherName,
@@ -44,12 +49,12 @@ export default function Teacher() {
     return (
       <tr>
         <th scope="row">{index + 1}</th>
-        <td colspan="2">{teacher.fullName}</td>
-        <td colspan="2">{teacher.dateOfBirth}</td>
-        <td colspan="2">{teacher.placeOfOrigin.name}</td>
-        <td colspan="2">{teacher.phoneNumber}</td>
-        <td colspan="2">{teacher.emailAddress}</td>
-        <td colspan="2">{teacher.faculty.name}</td>
+        <td colSpan="2">{teacher.fullName}</td>
+        <td colSpan="2">{teacher.dateOfBirth}</td>
+        <td colSpan="2">{teacher.placeOfOrigin.name}</td>
+        <td colSpan="2">{teacher.phoneNumber}</td>
+        <td colSpan="2">{teacher.emailAddress}</td>
+        <td colSpan="2">{teacher.faculty.name}</td>
       </tr>
     );
   });
@@ -79,7 +84,7 @@ export default function Teacher() {
             value={formik.facultyId}
             onChange={formik.handleChange}
           >
-            <option selected value="0">
+            <option defaultValue={0} value="0">
               Choose the faculty
             </option>
             {renderFacultyList}

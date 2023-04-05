@@ -36,7 +36,7 @@ public class TeacherController {
 //    }
 
     @GetMapping("/search-teacher")
-    List<Teacher> searchTeacher(@RequestParam(value = "teacherName",defaultValue = "") String fullName, @RequestParam("facultyId") Integer facultyId) {
+    List<Teacher> searchTeacher(@RequestParam(name = "fullName",defaultValue = "") String fullName, @RequestParam(name = "facultyId",defaultValue = "0") Integer facultyId) {
         return teacherService.searchTeacher(fullName, facultyId);
     }
 //    @PostMapping("/edit-teacher")
