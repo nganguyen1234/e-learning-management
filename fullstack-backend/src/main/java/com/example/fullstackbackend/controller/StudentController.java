@@ -17,9 +17,13 @@ public class StudentController {
     StudentService studentService;
 
     @GetMapping("/get-student-by-class/{id}")
-    List<Student> getStudentsByClass(@PathVariable(name = "id") Integer classId) {
-        return studentService.getStudentsByClass(classId);
+    List<Student> searchStudentInClassByName(@PathVariable(name = "id") Integer classId,@RequestParam(name = "name",defaultValue = "") String name) {
+        return studentService.searchStudentInClass(classId,name);
     }
+//    @GetMapping("/get-student-by-class/{id}")
+//    List<Student> getStudentsByClass(@PathVariable(name = "id") Integer classId) {
+//        return studentService.getStudentByClass(classId);
+//    }
 
     @PostMapping("/add-student-to-class")
     Student addStudent(@RequestBody Student student){

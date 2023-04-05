@@ -12,7 +12,11 @@ public class StudentService {
     @Autowired
     IStudentRepository studentRepository;
 
-    public List<Student> getStudentsByClass(Integer classId) {
+    public List<Student> searchStudentInClass(Integer classId,String name) {
+        return studentRepository.searchStudentInClass(classId,name);
+    }
+
+    public List<Student> getStudentByClass(Integer classId){
         return studentRepository.getStudentByClazz(classId);
     }
 
