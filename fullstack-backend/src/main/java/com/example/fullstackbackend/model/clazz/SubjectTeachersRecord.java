@@ -6,11 +6,11 @@ import com.example.fullstackbackend.model.timeTable.Subject;
 import javax.persistence.*;
 
 @Entity
-public class SubjectTeachers {
+public class SubjectTeachersRecord {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
-    @OneToOne
+    @ManyToOne
     private Clazz clazz;
     @OneToOne
     private Subject subject;

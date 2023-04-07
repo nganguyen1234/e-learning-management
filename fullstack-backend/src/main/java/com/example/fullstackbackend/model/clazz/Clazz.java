@@ -14,12 +14,13 @@ public class Clazz {
     private String name;
     @OneToMany
     private Set<Student> studentSet;
-    @ManyToMany
-    private Set<Teacher> teacherSet;
+    @OneToMany
+    private Set<SubjectTeachersRecord> subjectTeachersRecords;
     @OneToOne
     private Teacher instructor;
     @Column(columnDefinition = "boolean default false")
     private boolean isDeleted;
+
     public Integer getId() {
         return id;
     }
@@ -44,12 +45,12 @@ public class Clazz {
         this.studentSet = studentSet;
     }
 
-    public Set<Teacher> getTeacherSet() {
-        return teacherSet;
+    public Set<SubjectTeachersRecord> getSubjectTeachersRecords() {
+        return subjectTeachersRecords;
     }
 
-    public void setTeacherSet(Set<Teacher> teacherSet) {
-        this.teacherSet = teacherSet;
+    public void setSubjectTeachersRecords(Set<SubjectTeachersRecord> subjectTeachersRecords) {
+        this.subjectTeachersRecords = subjectTeachersRecords;
     }
 
     public boolean isDeleted() {

@@ -16,11 +16,15 @@ public class ClassService {
         return classRepository.find1stGrade();
     }
 
-    public Clazz addClass(Clazz clazz){
+    public Clazz addClass(Clazz clazz) {
         return classRepository.save(clazz);
     }
 
-    public List<Clazz> getAllClass(){
+    public List<Clazz> getAllClass() {
         return classRepository.findAll();
+    }
+
+    public Clazz getClassById(Integer id) {
+        return classRepository.findById(id).orElse(null);
     }
 }

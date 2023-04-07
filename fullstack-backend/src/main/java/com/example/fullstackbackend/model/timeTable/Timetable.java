@@ -3,6 +3,7 @@ package com.example.fullstackbackend.model.timeTable;
 import com.example.fullstackbackend.model.clazz.Clazz;
 
 import javax.persistence.*;
+import java.util.List;
 import java.util.Set;
 
 @Entity
@@ -13,7 +14,7 @@ public class Timetable {
     @OneToOne
     private Clazz clazz;
     @OneToMany
-    private Set<Period> periodSet;
+    private Set<Period> periods;
     @Column(columnDefinition = "boolean default false")
     private boolean isDeleted;
 
@@ -33,13 +34,6 @@ public class Timetable {
         this.clazz = clazz;
     }
 
-    public Set<Period> getPeriodSet() {
-        return periodSet;
-    }
-
-    public void setPeriodSet(Set<Period> periodSet) {
-        this.periodSet = periodSet;
-    }
 
     public boolean isDeleted() {
         return isDeleted;
@@ -47,5 +41,13 @@ public class Timetable {
 
     public void setDeleted(boolean deleted) {
         isDeleted = deleted;
+    }
+
+    public Set<Period> getPeriods() {
+        return periods;
+    }
+
+    public void setPeriods(Set<Period> periods) {
+        this.periods = periods;
     }
 }

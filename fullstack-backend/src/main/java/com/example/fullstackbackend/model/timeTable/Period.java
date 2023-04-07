@@ -1,8 +1,5 @@
 package com.example.fullstackbackend.model.timeTable;
 
-import com.example.fullstackbackend.model.clazz.Clazz;
-import com.example.fullstackbackend.model.teacher.Teacher;
-
 import javax.persistence.*;
 
 @Entity
@@ -10,14 +7,10 @@ public class Period {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
-    @ManyToOne
-    private Timetable timetable;
-    @ManyToOne
-    private Teacher teacher;
-    @ManyToOne
+    @OneToOne
     private Subject subject;
     private String day;
-    private String time;
+    private Integer period;
     @Column(columnDefinition = "boolean default false")
     private boolean isDeleted;
 
@@ -27,22 +20,6 @@ public class Period {
 
     public void setId(Integer id) {
         this.id = id;
-    }
-
-    public Timetable getTimetable() {
-        return timetable;
-    }
-
-    public void setTimetable(Timetable timetable) {
-        this.timetable = timetable;
-    }
-
-    public Teacher getTeacher() {
-        return teacher;
-    }
-
-    public void setTeacher(Teacher teacher) {
-        this.teacher = teacher;
     }
 
     public Subject getSubject() {
@@ -61,12 +38,12 @@ public class Period {
         this.day = day;
     }
 
-    public String getTime() {
-        return time;
+    public Integer getPeriod() {
+        return period;
     }
 
-    public void setTime(String time) {
-        this.time = time;
+    public void setPeriod(Integer period) {
+        this.period = period;
     }
 
     public boolean isDeleted() {
