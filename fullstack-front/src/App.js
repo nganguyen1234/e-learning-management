@@ -2,12 +2,6 @@ import "./App.css";
 import "bootstrap/dist/css/bootstrap.min.css";
 
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
-import AddStudent from "./components/pages/clazz/AddStudent";
-import Teacher from "./components/pages/user/teacher";
-import Class from "./components/pages/user/Class";
-import StudentList from "./components/pages/user/StudentList";
-import Timetable from "./components/pages/user/Timetable";
-import DetailTimetable from "./components/pages/user/DetailTimetable";
 import { useEffect, useState } from "react";
 import { useUser } from "./components/userProvider/UserProvider";
 import Unauthorized from "./components/pages/ErrorPage/Unauthorized";
@@ -17,20 +11,23 @@ import axios from "axios";
 import Login from "./components/pages/login/Login";
 import TeacherHomePage from "./components/pages/teacher/TeacherHomePage";
 import Home from "./components/pages/user/UserHome";
+import DetailTimetable from "./components/pages/user/DetailClassTimetable";
+import Timetable from "./components/pages/user/ClassTimetableList";
+import Class from "./components/pages/user/ClassList";
+import Teacher from "./components/pages/user/TeacherList";
+import StudentList from "./components/pages/user/DetailStudentList";
 function App() {
   const user = useUser();
   const [authorities, setAuthorities] = useState([]);
-  useEffect(()=>{
-    if(user.jwt){
+  useEffect(() => {
+    if (user.jwt) {
       const decoded = jwt_decode(user.jwt);
       setAuthorities(decoded.authorities);
-        }
-      
-  },[])
-  useEffect(()=>{
+    }
+  }, []);
+  useEffect(() => {
     console.log("authorities: " + authorities);
-
-  },[authorities])
+  }, [authorities]);
 
   return (
     <div className="App flex">
@@ -38,13 +35,13 @@ function App() {
       <Router>
         <Routes>
           <Route exact path="/" element={<Home />} />
-          {/* <Route
+          <Route
             exact
             path="/teacher/home"
             element={
-              roles.find((role) => role === "ROLE_TEACHER") ? (
+              authorities.find((role) => role === "ROLE_TEACHER") ? (
                 <PrivateRoute>
-                  <Home></Home>
+                  <TeacherHomePage />
                 </PrivateRoute>
               ) : (
                 <PrivateRoute>
@@ -52,7 +49,7 @@ function App() {
                 </PrivateRoute>
               )
             }
-          ></Route> */}
+          ></Route>
           <Route
             exact
             path="/teacher/home"
@@ -79,7 +76,6 @@ function App() {
           ></Route>
           <Route path="/login" element={<Login />} />
         </Routes>
-        {/* <Route exact path="/login" element={<Login />} /> */}
       </Router>
     </div>
   );
