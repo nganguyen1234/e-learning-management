@@ -36,8 +36,13 @@ public class TeacherController {
 //    }
 
     @GetMapping("/search-teacher")
-    List<Teacher> searchTeacher(@RequestParam(name = "fullName",defaultValue = "") String fullName, @RequestParam(name = "facultyId",defaultValue = "0") Integer facultyId) {
+    List<Teacher> searchTeacher(@RequestParam(name = "fullName", defaultValue = "") String fullName, @RequestParam(name = "facultyId", defaultValue = "0") Integer facultyId) {
         return teacherService.searchTeacher(fullName, facultyId);
+    }
+
+    @GetMapping("/get-teacher-by-id")
+    Teacher getTeacherInfo(@RequestParam(name = "id") Integer id) {
+        return teacherService.findById(id);
     }
 //    @PostMapping("/edit-teacher")
 //    Teacher editTeacher(@RequestBody TeacherDto teacherDto, @RequestBody Integer id){

@@ -1,18 +1,22 @@
 package com.example.fullstackbackend.model.user;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import org.springframework.security.core.GrantedAuthority;
+
 import javax.persistence.*;
+import java.util.Set;
 
 @Entity
-public class Account {
+public class Authority implements GrantedAuthority {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
-    private String username;
-    private String password;
+    private String authority;
     @Column(columnDefinition = "boolean default false")
     private boolean isDeleted;
     @ManyToOne
-    private Role role;
+    @JsonIgnore
+    private User user;
 
     public Integer getId() {
         return id;
@@ -22,20 +26,16 @@ public class Account {
         this.id = id;
     }
 
-    public String getUsername() {
-        return username;
+    public void setAuthority(String authority) {
+        this.authority = authority;
     }
 
-    public void setUsername(String username) {
-        this.username = username;
+    public User getUser() {
+        return user;
     }
 
-    public String getPassword() {
-        return password;
-    }
-
-    public void setPassword(String password) {
-        this.password = password;
+    public void setUser(User user) {
+        this.user = user;
     }
 
     public boolean isDeleted() {
@@ -46,11 +46,8 @@ public class Account {
         isDeleted = deleted;
     }
 
-    public Role getRole() {
-        return role;
-    }
-
-    public void setRole(Role role) {
-        this.role = role;
+    @Override
+    public String getAuthority() {
+        return authority;
     }
 }

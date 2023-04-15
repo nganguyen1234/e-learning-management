@@ -3,15 +3,20 @@ import { useState } from "react";
 import { useFormik } from "formik";
 import axios from "axios";
 export default function Teacher() {
-  const [teacherList, setTeacherList] = useState([]);
   const [facultyList, setFacultyList] = useState([]);
 
   //dùng useEffect để đổ ra full list teacher lần đầu
+
+  const [teacherList, setTeacherList] = useState([]);
   useEffect(() => {
     getTeacherList();
     getFacultyList();
+    console.log(teacherList);
   }, []);
 
+  useEffect(()=>{
+    console.log(teacherList);
+  },[teacherList])
   // tạo formik để search teacher theo tên và facultyId
   const formik = useFormik({
     initialValues: {
@@ -21,9 +26,6 @@ export default function Teacher() {
     onSubmit: () => {
       getTeacherList();
     },
-    //  onSubmit: values => {
-    //     getTeacherList();
-    //   },
   });
 
   //lấy data(ds teacher) từ db, lưu trong state
