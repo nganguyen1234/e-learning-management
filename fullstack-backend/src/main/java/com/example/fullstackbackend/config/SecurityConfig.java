@@ -59,7 +59,10 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                     response.sendError(HttpServletResponse.SC_UNAUTHORIZED, authException.getMessage());
                 }).and();
         http.authorizeRequests()
-                .antMatchers("/authentication/**").permitAll()
+//                .antMatchers("/authentication/**").permitAll()
+//                .antMatchers("/teacher/get-personal-info/**").permitAll()
+//                .antMatchers("/teacher/**").permitAll()
+                .antMatchers("/**").permitAll()
                 .anyRequest().authenticated();
 
         http.addFilterBefore(jwtFilter, UsernamePasswordAuthenticationFilter.class);

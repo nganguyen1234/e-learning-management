@@ -41,11 +41,25 @@ public class TeacherController {
     }
 
     @GetMapping("/get-teacher-by-id")
-    Teacher getTeacherInfo(@RequestParam(name = "id") Integer id) {
+    Teacher getTeacherInfoById(@RequestParam(name = "id") Integer id) {
         return teacherService.findById(id);
     }
-//    @PostMapping("/edit-teacher")
+
+    //    @PostMapping("/edit-teacher")
 //    Teacher editTeacher(@RequestBody TeacherDto teacherDto, @RequestBody Integer id){
 //
 //    }
+    @GetMapping("/get-personal-info/{username}")
+    Teacher getTeacherInfoByUsername(@PathVariable(name = "username") String username) {
+        return teacherService.findByUsername(username);
+    }
+
+    @PostMapping("/update-personal-information")
+    Teacher editPersonalInfo(@RequestBody Teacher teacher) {
+        try {
+            return teacherService.editTeacher(teacher);
+        } catch (Exception e) {
+            return null;
+        }
+    }
 }

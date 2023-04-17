@@ -60,7 +60,7 @@ export default function Teacher() {
   //lấy data(ds faculty) từ db để làm dropdown selection giúp tìm kiếm teacher:
   const getFacultyList = async () => {
     await axios
-      .get("http://localhost:8080/personal-info/get-all-faculty")
+      .get("http://localhost:8080/common-info/get-all-faculty")
       .then((res) => {
         setFacultyList(res.data);
       });

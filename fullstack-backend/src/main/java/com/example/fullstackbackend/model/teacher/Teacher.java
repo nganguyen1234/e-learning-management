@@ -3,6 +3,7 @@ package com.example.fullstackbackend.model.teacher;
 import com.example.fullstackbackend.model.address.City;
 import com.example.fullstackbackend.model.address.Ethnicity;
 import com.example.fullstackbackend.model.clazz.Clazz;
+import com.example.fullstackbackend.model.user.User;
 import org.springframework.boot.context.properties.bind.DefaultValue;
 
 import javax.persistence.*;
@@ -28,6 +29,8 @@ public class Teacher {
     private boolean isDeleted;
     @ManyToOne
     private Faculty faculty;
+    @OneToOne
+    private User user;
 
     public Integer getId() {
         return id;

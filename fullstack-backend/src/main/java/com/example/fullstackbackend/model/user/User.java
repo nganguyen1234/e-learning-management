@@ -17,7 +17,11 @@ public class User implements UserDetails {
     private String password;
     @Column(columnDefinition = "boolean default false")
     private boolean isDeleted;
-    @OneToMany
+    @ManyToMany
+    @JoinTable(
+            name = "user_authorities",
+            joinColumns = @JoinColumn(name = "user_id"),
+            inverseJoinColumns = @JoinColumn(name = "authority_id"))
     private Set<Authority> authorities = new HashSet<>();
 
     public Integer getId() {
@@ -31,7 +35,6 @@ public class User implements UserDetails {
     public String getUsername() {
         return username;
     }
-
 
 
     @Override

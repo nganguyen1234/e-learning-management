@@ -1,6 +1,7 @@
 package com.example.fullstackbackend.controller;
 
 import com.example.fullstackbackend.model.address.City;
+import com.example.fullstackbackend.model.address.Ethnicity;
 import com.example.fullstackbackend.model.teacher.Faculty;
 import com.example.fullstackbackend.service.CommonInfoService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,7 +14,7 @@ import java.util.List;
 
 @RestController
 @CrossOrigin("*")
-@RequestMapping(value = "/personal-info")
+@RequestMapping(value = "/common-info")
 public class CommonInfoController {
     @Autowired
     private CommonInfoService commonInfoService;
@@ -26,5 +27,10 @@ public class CommonInfoController {
     @GetMapping("/get-all-faculty")
     public List<Faculty> getAllFaculty() {
         return commonInfoService.getAllFaculty();
+    }
+
+    @GetMapping("/get-all-ethnicity")
+    public List<Ethnicity> getAllEthnicity(){
+        return commonInfoService.getAllEthnicity();
     }
 }

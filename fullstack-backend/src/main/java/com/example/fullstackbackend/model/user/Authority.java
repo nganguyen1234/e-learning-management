@@ -11,12 +11,13 @@ public class Authority implements GrantedAuthority {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
+    @Column(columnDefinition = "varchar(255) default 'ROLE_TEACHER'")
     private String authority;
     @Column(columnDefinition = "boolean default false")
     private boolean isDeleted;
-    @ManyToOne
     @JsonIgnore
-    private User user;
+    @ManyToMany(mappedBy = "authorities")
+   private Set<User> users;
 
     public Integer getId() {
         return id;
@@ -30,12 +31,12 @@ public class Authority implements GrantedAuthority {
         this.authority = authority;
     }
 
-    public User getUser() {
-        return user;
+    public Set<User> getUsers() {
+        return users;
     }
 
-    public void setUser(User user) {
-        this.user = user;
+    public void setUsers(Set<User> users) {
+        this.users = users;
     }
 
     public boolean isDeleted() {

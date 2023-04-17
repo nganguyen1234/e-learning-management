@@ -16,6 +16,7 @@ import Timetable from "./components/pages/user/ClassTimetableList";
 import Class from "./components/pages/user/ClassList";
 import Teacher from "./components/pages/user/TeacherList";
 import StudentList from "./components/pages/user/DetailStudentList";
+import TeacherPersonalInfo from "./components/pages/teacher/TeacherPersonalInfo";
 function App() {
   const user = useUser();
   const [authorities, setAuthorities] = useState([]);
@@ -31,7 +32,6 @@ function App() {
 
   return (
     <div className="App flex">
-      <div>Homepage with jwt = {user.jwt}</div>
       <Router>
         <Routes>
           <Route exact path="/" element={<Home />} />
@@ -44,9 +44,19 @@ function App() {
                   <TeacherHomePage />
                 </PrivateRoute>
               ) : (
+                <Unauthorized />
+              )
+            }
+          ></Route>
+          <Route
+            path="/teacher/personal-information"
+            element={
+              authorities.find((role) => role === "ROLE_TEACHER") ? (
                 <PrivateRoute>
-                  <Unauthorized />
+                  <TeacherPersonalInfo />
                 </PrivateRoute>
+              ) : (
+                <Unauthorized />
               )
             }
           ></Route>
