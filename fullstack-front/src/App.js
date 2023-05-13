@@ -7,7 +7,6 @@ import { useUser } from "./components/userProvider/UserProvider";
 import Unauthorized from "./components/pages/ErrorPage/Unauthorized";
 import jwt_decode from "jwt-decode";
 import PrivateRoute from "./components/privateRoute/PrivateRoute";
-import axios from "axios";
 import Login from "./components/pages/login/Login";
 import TeacherHomePage from "./components/pages/teacher/TeacherHomePage";
 import Home from "./components/pages/user/UserHome";
@@ -20,6 +19,8 @@ import TeacherPersonalInfo from "./components/pages/teacher/TeacherPersonalInfo"
 import Logout from "./components/pages/logout/Logout";
 import DetailStudent from "./components/pages/user/DetailStudent";
 import TeacherLayout from "./components/layout/teacherPage/TeacherLayout";
+import GuestLayout from "./components/layout/guestPage/GuestLayout";
+import UserHome from "./components/pages/user/UserHome";
 function App() {
   const user = useUser();
   const [authorities, setAuthorities] = useState([]);
@@ -38,33 +39,53 @@ function App() {
       <Router>
         <Routes>
           <Route exact path="/" element={<Home />} />
-          <Route exact path="/teacher" element = { authorities.find((role)=>role == "ROLE_TEACHER") ? (
-                <PrivateRoute>
-                  <TeacherLayout/>
-                  </PrivateRoute> ) : (<Unauthorized/>)
-          } >
-            <Route exact path="home" element={<TeacherHomePage/>} />
-          <Route exact path="personal-information" element={<TeacherPersonalInfo/>} />
-          <Route exact path="show-student-list/:classId" element={<StudentList activeLink="active"/>} />
-          <Route exact path="get-student-information/:studentId" element={<DetailStudent/>} />
-          </Route>
-          {/* <Route
+          <Route
             exact
-            // path="/student/get-personal-information/:studentId"
-            path="/teacher/get-student-information/:studentId"
+            path="/teacher"
             element={
               authorities.find((role) => role == "ROLE_TEACHER") ? (
                 <PrivateRoute>
-                  <DetailStudent />
+                  <TeacherLayout />
                 </PrivateRoute>
               ) : (
                 <Unauthorized />
               )
             }
-          ></Route> */}
-         {/* <Route exact path="/add-class/:classId" element = {<AddClass/>}></Route>
-<Route exact path="/add-student/:classId" element={<AddStudent/>}></Route> */}
-          <Route exact path="/guest/teacher" element={<Teacher />}></Route>
+          >
+            <Route exact path="home" element={<TeacherHomePage />} />
+            <Route
+              exact
+              path="personal-information"
+              element={<TeacherPersonalInfo />}
+            />
+            <Route
+              exact
+              path="show-student-list/:classId"
+              element={<StudentList activeLink="active" />}
+            />
+            <Route
+              exact
+              path="get-student-information/:studentId"
+              element={<DetailStudent />}
+            />
+          </Route>
+          <Route exact path="/guest" element={<GuestLayout />}>
+            <Route exact path= "home" element={<UserHome/>}/>
+            <Route exact path="teacher" element={<Teacher />} />
+            <Route
+              exact
+              path="student/show-student-by-class/:classId"
+              element={<StudentList activeLink="disabled" />}
+            />
+            <Route exact path="student" element={<Class />} />
+            <Route exact path="timetable" element={<Timetable />} />
+            <Route
+              exact
+              path="timetable/show-timetable-by-class/:classId"
+              element={<DetailTimetable />}
+            />
+          </Route>
+          {/* <Route exact path="/guest/teacher" element={<Teacher />}></Route>
           <Route
             exact
             path="/guest/student/show-student-by-class/:classId"
@@ -76,7 +97,7 @@ function App() {
             exact
             path="/guest/timetable/show-timetable-by-class/:classId"
             element={<DetailTimetable />}
-          ></Route>
+          ></Route> */}
           <Route path="/login" element={<Login />} />
           <Route path="/logout" element={<Logout />} />
         </Routes>
