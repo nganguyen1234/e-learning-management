@@ -103,18 +103,18 @@
 //         </label>
 //       </div>
 //       {/* place of origin field */}
-//       <div className="mb-3 form-group">
-//         <label htmlFor="placeOfOrigin" className="form-check-label">
-//           Place of Origin
-//         </label>
-//         <select
-//           name="placeOfOrigin.id"
-//           value={formik.values.placeOfOrigin.id}
-//           onChange={formik.handleChange}
-//         >
-//           {showCityOptions}
-//         </select>
-//       </div>
+    //   <div className="mb-3 form-group">
+    //     <label htmlFor="placeOfOrigin" className="form-check-label">
+    //       Place of Origin
+    //     </label>
+    //     <select
+    //       name="placeOfOrigin.id"
+    //       value={formik.values.placeOfOrigin.id}
+    //       onChange={formik.handleChange}
+    //     >
+    //       {showCityOptions}
+    //     </select>
+    //   </div>
 
 //       {/* father full name field */}
 //       <div className="mb-3 form-group">

@@ -33,5 +33,13 @@ public class StudentController {
 //    List<Student> getStudentsByClass(@RequestBody Clazz clazz) {
 //        return studentService.getStudentsByClass(clazz.getId());
 //    }
+@GetMapping("/get-personal-information/{id}")
+    Student getPersonalInfomation(@PathVariable(name = "id") Integer studentId){
+        return studentService.getPersonalInformation(studentId);
+}
 
+@PostMapping("/update-student-information")
+    Student updateStudentInformation(@RequestBody Student student){
+        return studentService.updateStudentInformation(student);
+}
 }

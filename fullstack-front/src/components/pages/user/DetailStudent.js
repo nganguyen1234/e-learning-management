@@ -2,48 +2,56 @@ import { useFormik } from "formik";
 import React, { useEffect, useState } from "react";
 import { useUser } from "../../userProvider/UserProvider";
 import axios from "axios";
-import { useNavigate } from "react-router-dom";
-
-export default function TeacherPersonalInfo() {
-  const user = useUser();
-  // const user = props.user;
+import { useNavigate, useParams } from "react-router-dom";
+export default function DetailStudent() {
+  const { studentId } = useParams();
   const navigate = useNavigate();
+  const user = useUser();
   const [isReadonly, setIsReadonly] = useState(true);
   const [ethnicity, setEthnicity] = useState([]);
   const [placeOfOrigin, setPlaceOfOrigin] = useState([]);
-  const [faculty, setFaculty] = useState([]);
+  const [student, setStudent] = useState({});
+
+  useEffect(() => {
+    axios
+      .get(
+        "http://localhost:8080/student/get-personal-information/" + studentId,
+        {
+          headers: {
+            Authorization: `Bearer ${user.jwt}`,
+          },
+        },
+        {
+          withCredentials: true,
+        }
+      )
+      .then((res) => {
+        setStudent(res.data);
+      });
+  }, []);
 
   const formik = useFormik({
     initialValues: {
-      id: user.user.id,
-      // user: user.user.user ,
-      user: {
-        id: user.user.user ? user.user.user.id : "",
-      },
-      gender: user.user.gender,
-      fullName: user.user.fullName,
-      dateOfBirth: user.user.dateOfBirth,
-      idCardNumber: user.user.idCardNumber,
-      address: user.user.address,
-      emailAddress: user.user.emailAddress,
-      phoneNumber: user.user.phoneNumber,
-      // ethnicity: user.user.ethnicity,
-      ethnicity: {
-        id: user.user.ethnicity ? user.user.ethnicity.id : "",
-      },
-      placeOfOrigin: {
-        id: user.user.placeOfOrigin ? user.user.placeOfOrigin.id : "",
-      },
-      faculty: { id: user.user.faculty ? user.user.faculty.id : "" },
+      id: student.id,
+      gender: student.gender,
+      fullName: student.fullName,
+      dateOfBirth: student.dateOfBirth,
+      dadName: student.dadName,
+      dadJob: student.dadJob,
+      momName: student.momName,
+      momJob: student.momJob,
+      status: student.status,
+        clazz: { id: ""},
+        ethnicity: { id: "" },
+        placeOfOrigin: { id: ""},
     },
-    enableReinitialize: true,
     onSubmit: (values) => save(values),
   });
 
   function save(values) {
     setIsReadonly((prevState) => !prevState);
     axios.post(
-      "http://localhost:8080/teacher/update-personal-information",
+      "http://localhost:8080/student/update-student-information",
       values,
       {
         headers: {
@@ -55,6 +63,7 @@ export default function TeacherPersonalInfo() {
       }
     );
   }
+
   function displayButton() {
     if (isReadonly) {
       return (
@@ -75,7 +84,7 @@ export default function TeacherPersonalInfo() {
           <button type="submit">Save Test</button>
           <button
             onClick={() => {
-              navigate("/teacher/personal-information");
+              navigate(`/student/get-personal-information/${studentId}`);
             }}
           >
             Cancle
@@ -119,23 +128,6 @@ export default function TeacherPersonalInfo() {
       .then((res) => {
         setPlaceOfOrigin(res.data);
       });
-
-    axios
-      .get(
-        "http://localhost:8080/common-info/get-all-faculty",
-        user.jwt,
-        {
-          headers: {
-            Authorization: `Bearer ${user.jwt}`,
-          },
-        },
-        {
-          withCredentials: true,
-        }
-      )
-      .then((res) => {
-        setFaculty(res.data);
-      });
   }, []);
 
   const showCityOptions = placeOfOrigin.map((city) => {
@@ -144,12 +136,9 @@ export default function TeacherPersonalInfo() {
   const showEthnicityOption = ethnicity.map((ethnicity) => {
     return <option value={ethnicity.id}>{ethnicity.name}</option>;
   });
-  const showFacultyOption = faculty.map((faculty) => {
-    return <option value={faculty.id}>{faculty.name}</option>;
-  });
 
   return (
-    <div>
+    <div >
       <div className="d-flex justify-content-center row-md-6">
         <img
           src="/images/teacherpageHeader.jpg"
@@ -157,23 +146,15 @@ export default function TeacherPersonalInfo() {
           alt="header"
         />
       </div>
-      <div className="row  justify-content-center">Personal Information</div>
+      <div className="row  justify-content-center">Student Personal Information {student.fullName}</div>
       <form onSubmit={formik.handleSubmit}>
-        <input
-          name="id"
-          value={formik.values.id}
-          style={{ visibility: "hidden" }}
-        />
-        <input
-          name="user.id"
-          value={formik.values.user.id}
-          style={{ visibility: "hidden" }}
-        />
+        <input name="id" value={formik.values.id? formik.values.id: student.id}  />
+        {/* <input name="clazz.id" value={formik.values.clazz.id} /> */}
         <div className="d-flex justify-content-center row-md-6">
           <label htmlFor="gender">Gender</label>
           <select
             name="gender"
-            value={formik.values.gender}
+            value={formik.values.gender? formik.values.gender : student.gender}
             onChange={formik.handleChange}
             disabled={isReadonly}
           >
@@ -188,7 +169,7 @@ export default function TeacherPersonalInfo() {
               name="fullName"
               type="text"
               readOnly={isReadonly}
-              value={formik.values.fullName}
+              value={formik.values.fullName? formik.values.fullName : student.fullName}
               onChange={formik.handleChange}
             ></input>
           </div>
@@ -200,117 +181,104 @@ export default function TeacherPersonalInfo() {
               name="dateOfBirth"
               type="text"
               readOnly={isReadonly}
-              value={formik.values.dateOfBirth}
+              value={formik.values.dateOfBirth ? formik.values.dateOfBirth : student.dateOfBirth}
               onChange={formik.handleChange}
             ></input>
           </div>
         </div>
         <div className="d-flex justify-content-center row-md-6">
           <div className="mb-3 form-group p-2 g-col-6">
-            <label htmlFor="idCardNumber">Id Card Number</label>
+            <label htmlFor="dadName">Father name</label>
             <input
-              name="idCardNumber p-2 g-col-6"
+              name="dadName"
+              className=" p-2 g-col-6"
               type="text"
               readOnly={isReadonly}
-              value={formik.values.idCardNumber}
+              value={formik.values.dadName ? formik.values.dadName : student.dadName}
               onChange={formik.handleChange}
             ></input>
           </div>
         </div>
         <div className="d-flex justify-content-center row-md-6">
           <div className="mb-3 form-group p-2 g-col-6">
-            <label htmlFor="address">Address</label>
+            <label htmlFor="dadJob">Father job</label>
             <input
-              name="address"
+              name="dadJob"
               type="text"
               readOnly={isReadonly}
-              value={formik.values.address}
+              value={formik.values.dadJob ? formik.values.dadJob : student.dadJob}
               onChange={formik.handleChange}
             ></input>
           </div>
         </div>
         <div className="d-flex justify-content-center row-md-6 p-2 g-col-6">
-          <label htmlFor="phoneNumber">Phone Number</label>
+          <label htmlFor="momName">Mother name</label>
           <input
-            name="phoneNumber"
+            name="momName"
             type="text"
             readOnly={isReadonly}
-            value={formik.values.phoneNumber}
+            value={formik.values.momName ? formik.values.momName : student.momName}
             onChange={formik.handleChange}
           ></input>
         </div>
         <div className="d-flex justify-content-center row-md-6 p-2 g-col-6">
           <div className="mb-3 form-group">
-            <label htmlFor="emailAddress">Email address</label>
+            <label htmlFor="momJob">Mother job</label>
             <input
-              name="emailAddress"
+              name="momJob"
               type="text"
               readOnly={isReadonly}
-              value={formik.values.emailAddress}
+              value={formik.values.momJob ? formik.values.momJob : student.momJob}
               onChange={formik.handleChange}
             ></input>
           </div>
         </div>
-
-        <div className="d-flex justify-content-center row-md-6 p-2 g-col-6">
-          <div className="mb-3 form-group">
-            <label htmlFor="ethnicity" className="form-check-label">
-              Ethnicity{" "}
-            </label>
-            <select
-              name="ethnicity.id"
-              disabled={isReadonly}
-              value={formik.values.ethnicity.id}
-              onChange={formik.handleChange}
-            >
-              {showEthnicityOption}
-            </select>
-          </div>
+{/*         
+        <div className="mb-3 form-group">
+          <label htmlFor="ethnicity.id" className="form-check-label">
+            Ethnicity
+          </label>
+          <select
+            name="ethnicity.id"
+            disabled={isReadonly}
+            value={formik.values.ethnicity.id ? formik.values.ethnicity.id : student.ethnicity.id}
+            onChange={formik.handleChange}
+          >
+            {showEthnicityOption}
+          </select>
         </div>
 
-        <div className="d-flex justify-content-center row-md-6 p-2 g-col-6">
-          <div className="mb-3 form-group">
-            <label htmlFor="placeOfOrigin" className="form-check-label">
-              Place of Origin
-            </label>
-            <select
-              name="placeOfOrigin.id"
-              disabled={isReadonly}
-              value={formik.values.placeOfOrigin.id}
-              onChange={formik.handleChange}
-            >
-              {showCityOptions}
-            </select>
-          </div>
+        <div className="mb-3 form-group">
+          <label htmlFor="placeOfOrigin.id" className="form-check-label">
+            Place of Origin
+          </label>
+          <select
+            name="placeOfOrigin.id"
+            disabled={isReadonly}
+            value={formik.values.placeOfOrigin.id ? formik.values.placeOfOrigin.id : student.placeOfOrigin.id}
+            onChange={formik.handleChange}
+          >
+            {showCityOptions}
+          </select>
+        </div> */}
+
+        <div className="d-flex justify-content-center row-md-6">
+          <label htmlFor="status">Status</label>
+          <select
+            name="status"
+            value={formik.values.status}
+            onChange={formik.handleChange}
+            disabled={isReadonly}
+          >
+            <option value="true">activate</option>
+            <option value="false">disabled</option>
+          </select>
         </div>
-        <div className="d-flex justify-content-center row-md-6 p-2 g-col-6">
-          <div className="mb-3 form-group">
-            <label htmlFor="faculty.id" className="form-check-label">
-              Faculty{" "}
-            </label>
-            <select
-              name="faculty.id"
-              disabled={isReadonly}
-              value={formik.values.faculty.id}
-              onChange={formik.handleChange}
-            >
-              {showFacultyOption}
-            </select>
-          </div>
-        </div>
-        {/* render "save" button  */}
-        <div className="d-flex justify-content-center row-md-6 p-2 g-col-6">
-          <div className="mb-3 form-group">
+        {/* render "save" button */}
         {!isReadonly ? displayButton() : <></>}
-        </div>
-        </div>
       </form>
-      {/* render "edit" button  */}
-      <div className="d-flex justify-content-center row-md-6 p-2 g-col-6">
-          <div className="mb-3 form-group">
+      {/* render "edit" button */}
       {isReadonly ? displayButton() : <></>}
-      </div>
-      </div>
     </div>
   );
 }

@@ -14,9 +14,9 @@ public class Student {
     private String fullName;
     private String dateOfBirth;
     private String gender;
-    @ManyToOne
+    @ManyToOne(cascade=CascadeType.ALL)
     private City placeOfOrigin;
-    @ManyToOne
+    @ManyToOne(cascade=CascadeType.ALL)
     private Ethnicity ethnicity;
     private String dadName;
     private String dadJob;
@@ -26,7 +26,7 @@ public class Student {
     private boolean status;
     @Column(columnDefinition = "boolean default false")
     private boolean isDeleted;
-    @ManyToOne
+    @ManyToOne(cascade=CascadeType.ALL)
     private Clazz clazz;
 
     public Integer getId() {

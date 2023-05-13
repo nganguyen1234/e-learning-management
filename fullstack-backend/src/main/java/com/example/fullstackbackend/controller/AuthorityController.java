@@ -18,9 +18,6 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
 
-import javax.validation.Valid;
-import javax.xml.ws.Response;
-
 @RestController
 @RequestMapping("/authentication")
 @CrossOrigin("*")
@@ -57,15 +54,6 @@ public class AuthorityController {
             return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
         }
     }
-
-    public ResponseEntity<?> validateToken(@CookieValue(name = "jwt") String token, @AuthenticationPrincipal User user) {
-        try {
-            Boolean isValidToken = jwtUtil.validateToken(token, user);
-            return ResponseEntity.ok(isValidToken);
-        } catch (ExpiredJwtException e) {
-            return ResponseEntity.ok(false);
-        }
-    }
     @GetMapping("/logout")
     public ResponseEntity<?> logout () {
         ResponseCookie cookie = ResponseCookie.from("jwt", "")
@@ -74,6 +62,15 @@ public class AuthorityController {
                 .maxAge(0)
                 .build();
         return ResponseEntity.ok()
-                .header(HttpHeaders.SET_COOKIE, cookie.toString()).body("ok");
+                .header(HttpHeaders.SET_COOKIE, cookie.toString()).body("");
     }
+    public ResponseEntity<?> validateToken(@CookieValue(name = "jwt") String token, @AuthenticationPrincipal User user) {
+        try {
+            Boolean isValidToken = jwtUtil.validateToken(token, user);
+            return ResponseEntity.ok(isValidToken);
+        } catch (ExpiredJwtException e) {
+            return ResponseEntity.ok(false);
+        }
+    }
+
 }

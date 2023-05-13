@@ -42,6 +42,7 @@ export default function Login() {
       })
       .then(() => {
         console.log("login success with jwt: " + user.jwt);
+        navigate("/teacher/home");
       });
   }
 

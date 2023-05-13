@@ -1,8 +1,7 @@
 package com.example.fullstackbackend.controller;
 
-import com.example.fullstackbackend.model.teacher.Faculty;
+import com.example.fullstackbackend.dto.teacher.TeacherDto;
 import com.example.fullstackbackend.model.teacher.Teacher;
-import com.example.fullstackbackend.model.teacher.TeacherDto;
 import com.example.fullstackbackend.service.teacher.TeacherService;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -50,13 +49,16 @@ public class TeacherController {
 //
 //    }
     @GetMapping("/get-personal-info/{username}")
-    Teacher getTeacherInfoByUsername(@PathVariable(name = "username") String username) {
-        return teacherService.findByUsername(username);
+    TeacherDto getTeacherInfoByUsername(@PathVariable(name = "username") String username) {
+        return teacherService.getFullTeacherInfo(username);
+
     }
 
     @PostMapping("/update-personal-information")
-    Teacher editPersonalInfo(@RequestBody Teacher teacher) {
+    Teacher editPersonalInfo(@RequestBody TeacherDto teacherDto) {
         try {
+            Teacher teacher = new Teacher();
+            BeanUtils.copyProperties(teacher, teacherDto);
             return teacherService.editTeacher(teacher);
         } catch (Exception e) {
             return null;

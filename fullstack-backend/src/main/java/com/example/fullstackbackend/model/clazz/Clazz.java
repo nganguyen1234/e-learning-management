@@ -2,6 +2,7 @@ package com.example.fullstackbackend.model.clazz;
 
 import com.example.fullstackbackend.model.student.Student;
 import com.example.fullstackbackend.model.teacher.Teacher;
+import org.hibernate.annotations.SQLDelete;
 
 import javax.persistence.*;
 import java.util.Set;

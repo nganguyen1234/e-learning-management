@@ -5,11 +5,14 @@ import jwtDecode from "jwt-decode";
 import axios from "axios";
 const UserContext = createContext();
 
-const UserProvider = ({ children }) => {
+const UserProvider = ({ children }) => { 
   const [jwt, setJwt] = useState(Cookies.get("jwt") ? Cookies.get("jwt") : "");
   const [user, setUser] = useState({});
+  const [monitoredClass,setMonitoredClass] = useState({});
+  
 
 useEffect(()=>{
+  
   if (jwt) {
     const decoded = jwtDecode(jwt);
     const username = decoded.sub;
@@ -23,11 +26,12 @@ useEffect(()=>{
       },)
       .then((res) => {
        setUser(res.data);
-      });
-  }
+      setMonitoredClass(res.data.monitoredClass);
+      });  }
 },[])
 
-  const value = { jwt, setJwt , user, setUser};
+
+  const value = { jwt, setJwt , user, setUser,monitoredClass,setMonitoredClass};
   return <UserContext.Provider value={value}>{children}</UserContext.Provider>;
 };
 
@@ -36,7 +40,7 @@ function useUser() {
   if (context === undefined) {
     throw new Error("useUser must be used within a UserProvider");
   }
-
+  console.log(context.user)
   return context;
 }
 

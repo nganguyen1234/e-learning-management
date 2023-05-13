@@ -1,5 +1,6 @@
 package com.example.fullstackbackend.repository.teacher;
 
+import com.example.fullstackbackend.model.clazz.Clazz;
 import com.example.fullstackbackend.model.teacher.Faculty;
 import com.example.fullstackbackend.model.teacher.Teacher;
 import org.springframework.data.jpa.repository.JpaRepository;
@@ -17,7 +18,9 @@ public interface ITeacherRepository extends JpaRepository<Teacher,Integer> {
 
     @Query(value = "select * from teacher join user u on teacher.user_id = u.id\n" +
             "where username like concat('%',:username,'%')",nativeQuery = true)
-    Optional<Teacher> findByUsername(@Param("username") String username);
+    Teacher findByUsername(@Param("username") String username);
+
+
 
 }
 

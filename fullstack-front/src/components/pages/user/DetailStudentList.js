@@ -3,7 +3,7 @@ import { Link } from "react-router-dom";
 import axios from "axios";
 import { useParams } from "react-router";
 import { useFormik } from "formik";
-export default function StudentList() {
+export default function StudentList(props) {
   const [studentList, setStudentList] = useState([]);
   //dùng formik để lưu giá trị name để search student
   const formik = useFormik({
@@ -42,7 +42,19 @@ export default function StudentList() {
     return (
       <tr>
         <th scope="row">{index + 1}</th>
-        <td>{student.fullName}</td>
+        {props.activeLink === "disabled" ? (
+          <td>{student.fullName}</td>
+        ) : (
+          <Link
+            className={`link ` + props.activeLink}
+            style={{ textDecoration: "none" }}
+            to={`/teacher/get-student-information/` + student.id}
+          >
+            {" "}
+            <td>{student.fullName}</td>{" "}
+          </Link>
+        )}
+        {/* <td>{student.fullName}</td> </Link> */}
         <td>{student.gender}</td>
         <td>{student.dateOfBirth}</td>
         <td>{student.placeOfOrigin.name}</td>

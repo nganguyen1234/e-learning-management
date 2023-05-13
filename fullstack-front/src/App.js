@@ -17,6 +17,9 @@ import Class from "./components/pages/user/ClassList";
 import Teacher from "./components/pages/user/TeacherList";
 import StudentList from "./components/pages/user/DetailStudentList";
 import TeacherPersonalInfo from "./components/pages/teacher/TeacherPersonalInfo";
+import Logout from "./components/pages/logout/Logout";
+import DetailStudent from "./components/pages/user/DetailStudent";
+import TeacherLayout from "./components/layout/teacherPage/TeacherLayout";
 function App() {
   const user = useUser();
   const [authorities, setAuthorities] = useState([]);
@@ -35,47 +38,37 @@ function App() {
       <Router>
         <Routes>
           <Route exact path="/" element={<Home />} />
-          <Route
-            exact
-            path="/teacher/home"
-            element={
-              authorities.find((role) => role === "ROLE_TEACHER") ? (
+          <Route exact path="/teacher" element = { authorities.find((role)=>role == "ROLE_TEACHER") ? (
                 <PrivateRoute>
-                  <TeacherHomePage />
+                  <TeacherLayout/>
+                  </PrivateRoute> ) : (<Unauthorized/>)
+          } >
+            <Route exact path="home" element={<TeacherHomePage/>} />
+          <Route exact path="personal-information" element={<TeacherPersonalInfo/>} />
+          <Route exact path="show-student-list/:classId" element={<StudentList activeLink="active"/>} />
+          <Route exact path="get-student-information/:studentId" element={<DetailStudent/>} />
+          </Route>
+          {/* <Route
+            exact
+            // path="/student/get-personal-information/:studentId"
+            path="/teacher/get-student-information/:studentId"
+            element={
+              authorities.find((role) => role == "ROLE_TEACHER") ? (
+                <PrivateRoute>
+                  <DetailStudent />
                 </PrivateRoute>
               ) : (
                 <Unauthorized />
               )
             }
-          ></Route>
-          <Route
-            path="/teacher/personal-information"
-            element={
-              authorities.find((role) => role === "ROLE_TEACHER") ? (
-                <PrivateRoute>
-                  <TeacherPersonalInfo />
-                </PrivateRoute>
-              ) : (
-                <Unauthorized />
-              )
-            }
-          ></Route>
-          <Route
-            exact
-            path="/teacher/home"
-            element={
-              <PrivateRoute>
-                <TeacherHomePage />
-              </PrivateRoute>
-            }
-          ></Route>
-          {/* <Route exact path="/add-class/:classId" element = {<AddClass/>}></Route>
+          ></Route> */}
+         {/* <Route exact path="/add-class/:classId" element = {<AddClass/>}></Route>
 <Route exact path="/add-student/:classId" element={<AddStudent/>}></Route> */}
           <Route exact path="/guest/teacher" element={<Teacher />}></Route>
           <Route
             exact
             path="/guest/student/show-student-by-class/:classId"
-            element={<StudentList />}
+            element={<StudentList activeLink="disabled" />}
           ></Route>
           <Route exact path="/guest/student" element={<Class />}></Route>
           <Route exact path="/guest/timetable" element={<Timetable />}></Route>
@@ -85,6 +78,7 @@ function App() {
             element={<DetailTimetable />}
           ></Route>
           <Route path="/login" element={<Login />} />
+          <Route path="/logout" element={<Logout />} />
         </Routes>
       </Router>
     </div>

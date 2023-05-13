@@ -1,14 +1,19 @@
 package com.example.fullstackbackend.service.teacher;
 
+import com.example.fullstackbackend.dto.teacher.TeacherDto;
+import com.example.fullstackbackend.model.clazz.Clazz;
 import com.example.fullstackbackend.model.teacher.Faculty;
 import com.example.fullstackbackend.model.teacher.Teacher;
+import com.example.fullstackbackend.repository.clazz.IClassRepository;
 import com.example.fullstackbackend.repository.commonInfoRepository.IFacultyRepository;
 import com.example.fullstackbackend.repository.teacher.ITeacherRepository;
+import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class TeacherService {
@@ -18,6 +23,9 @@ public class TeacherService {
 
     @Autowired
     private IFacultyRepository facultyRepository;
+
+    @Autowired
+    private IClassRepository classRepository;
 
     public List<Teacher> getAllTeachers() {
         List<Teacher> teacherList = teacherRepository.findAll();
@@ -46,7 +54,7 @@ public class TeacherService {
     }
 
     public Teacher findByUsername(String username) {
-        return teacherRepository.findByUsername(username).orElse(null);
+        return teacherRepository.findByUsername(username);
     }
 
     public Teacher editTeacher(Teacher teacher) throws Exception {
@@ -56,4 +64,13 @@ public class TeacherService {
         return teacherRepository.save(teacher);
     }
 
+    public TeacherDto getFullTeacherInfo(String username){
+        TeacherDto teacherDto = new TeacherDto();
+        Teacher teacher = teacherRepository.findByUsername(username);
+        BeanUtils.copyProperties(teacher,teacherDto);
+        Clazz clazz = classRepository.getMonitoredClassByTeacherId(teacher.getId());
+        teacherDto.setMonitoredClass(clazz);
+        return teacherDto;
+
+    }
 }

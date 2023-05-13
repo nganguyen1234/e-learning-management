@@ -24,4 +24,11 @@ public class StudentService {
         return studentRepository.save(student);
     }
 
+    public Student getPersonalInformation(Integer id){
+        return studentRepository.findById(id).orElse(null);
+    }
+
+    public Student updateStudentInformation(Student student){
+        return studentRepository.save(student);
+    }
 }
